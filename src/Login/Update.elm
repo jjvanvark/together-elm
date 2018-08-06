@@ -5,8 +5,10 @@ import Login.Model exposing (Model)
 import Login.Msg exposing (Msg(..))
 import Login.Requests exposing (login)
 import User.Requests exposing (start)
+import Navigation.Msg as NavigationMsg
 import Shared.Focus exposing (focus)
 import Shared.Ports exposing (setToken)
+import Shared.Task exposing (task)
 import Regex exposing (regex, contains, Regex, caseInsensitive)
 
 
@@ -56,7 +58,7 @@ update message model =
                     ! [ focus "login-password" ]
 
         ReceiveLogin (Ok token) ->
-            { model | token = Just token } ! [ setToken token, start token ]
+            { model | token = Just token } ! [ setToken token, start token, task <| AppMsg.Navigation NavigationMsg.CloseModal ]
 
 
 emailValidation : String -> Bool
