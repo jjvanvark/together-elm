@@ -4,24 +4,24 @@ import App.Msg as AppMsg
 import User.Msg exposing (Msg(ReceiveStart))
 import User.Types.Start exposing (Start, decodeStart)
 import Shared.Constants exposing (url)
-import Http exposing (send, Request, emptyBody, expectJson, request, header)
+import Http exposing (send, Request, emptyBody, expectJson, request)
 
 
-start : String -> Cmd AppMsg.Msg
-start token =
+start : Cmd AppMsg.Msg
+start =
     Cmd.map AppMsg.User <|
         send ReceiveStart <|
-            sendStart token
+            sendStart
 
 
-sendStart : String -> Request Start
-sendStart token =
+sendStart : Request Start
+sendStart =
     request
         { method = "GET"
-        , headers = [ header "Authorization" token ]
+        , headers = []
         , url = url "/start"
         , body = emptyBody
         , expect = expectJson decodeStart
         , timeout = Nothing
-        , withCredentials = False
+        , withCredentials = True
         }

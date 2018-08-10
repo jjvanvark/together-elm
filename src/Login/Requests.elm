@@ -28,5 +28,5 @@ sendLogin email password =
                     ]
         , expect = expectString
         , timeout = Nothing
-        , withCredentials = False
+        , withCredentials = True
         }

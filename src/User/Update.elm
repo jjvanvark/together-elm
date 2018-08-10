@@ -5,6 +5,7 @@ import User.Model exposing (Model)
 import User.Msg exposing (Msg(..))
 import Navigation.Msg as NavigationMsg
 import Navigation.Types as Modal
+import Shared.Focus exposing (focus)
 import Shared.Task exposing (task)
 import Http exposing (Error(..))
 
@@ -15,7 +16,7 @@ update message model =
         ReceiveStart (Err error) ->
             case checkStatus 401 error of
                 True ->
-                    model ! [ task <| AppMsg.Navigation (NavigationMsg.OpenModal Modal.Login) ]
+                    model ! [ task <| AppMsg.Navigation (NavigationMsg.OpenModal Modal.Login), focus "login-email" ]
 
                 False ->
                     model ! []

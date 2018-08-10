@@ -6,15 +6,13 @@ type alias Model =
     , passwordField : String
     , helpField : Maybe String
     , disabled : Bool
-    , token : Maybe String
     }
 
 
-initialModel : Maybe String -> Model
-initialModel token =
-    { emailField = ""
-    , passwordField = ""
+initialModel : Model
+initialModel =
+    { emailField = "joostvanvark@gmail.com"
+    , passwordField = "joost"
     , helpField = Nothing
     , disabled = False
-    , token = token
     }
