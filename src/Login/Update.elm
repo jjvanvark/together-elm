@@ -8,6 +8,7 @@ import User.Requests exposing (start)
 import Navigation.Msg as NavigationMsg
 import Shared.Focus exposing (focus)
 import Shared.Task exposing (task)
+import Shared.Ports exposing (setToken)
 import Regex exposing (regex, contains, Regex, caseInsensitive)
 
 
@@ -55,9 +56,12 @@ update message model =
                 }
                     ! [ focus "login-password" ]
 
-        ReceiveLogin (Ok _) ->
-            model
-                ! [ start
+        ReceiveLogin (Ok token) ->
+            { model
+                | token = Just token
+            }
+                ! [ setToken token
+                  , start <| Just token
                   , task <| AppMsg.Navigation NavigationMsg.CloseModal
                   ]
 

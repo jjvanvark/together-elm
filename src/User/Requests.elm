@@ -4,21 +4,22 @@ import App.Msg as AppMsg
 import User.Msg exposing (Msg(ReceiveStart))
 import User.Types.Start exposing (Start, decodeStart)
 import Shared.Constants exposing (url)
-import Http exposing (send, Request, emptyBody, expectJson, request)
+import Http exposing (send, Request, emptyBody, expectJson, request, header)
 
 
-start : Cmd AppMsg.Msg
-start =
+start : Maybe String -> Cmd AppMsg.Msg
+start maybeToken =
     Cmd.map AppMsg.User <|
         send ReceiveStart <|
-            sendStart
+            sendStart <|
+                Maybe.withDefault "" maybeToken
 
 
-sendStart : Request Start
-sendStart =
+sendStart : String -> Request Start
+sendStart token =
     request
         { method = "GET"
-        , headers = []
+        , headers = [ header "Authorization" token ]
         , url = url "/start"
         , body = emptyBody
         , expect = expectJson decodeStart

@@ -12,9 +12,9 @@ type alias Model =
     }
 
 
-initialModel : Model
-initialModel =
-    { login = Login.initialModel
+initialModel : Maybe String -> Model
+initialModel token =
+    { login = Login.initialModel token
     , user = User.initialModel
     , navigation = Navigation.initialModel
     }
