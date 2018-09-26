@@ -1,0 +1,31 @@
+$black: #000 !default;
+$white: #fff !default;
+
+$colors: (
+  pri: #ffa500,
+) !default;
+
+@function c($vars) {
+
+  $name: nth($vars, 1);
+  $shade: if(length($vars) > 1, nth($vars, 2), 5);
+
+  @if type-of($shade) != 'number' {
+    @error 'shade var should be a number';
+  }
+
+  @if $shade < 1 or $shade > 9 {
+    @error '$shade should be a number between 1 and 9';
+  }
+
+  $color: map-get($colors, $name);
+
+  @if $shade < 5 {
+    @return mix($color, $black, percentage($shade / 5));
+  } @else if $shade > 5 {
+    @return mix($white, $color, percentage(($shade - 5 ) / 5));
+  }
+
+  @return $color;
+
+}

@@ -1,0 +1,83 @@
+$unit: 8px;
+
+// Functions
+
+@import 'styles/functions/rem';
+@import 'styles/functions/colorize';
+
+// Mixins
+
+@import 'styles/mixins/breakpoint';
+@import 'styles/mixins/typography';
+@import 'styles/mixins/form';
+@import 'styles/mixins/list';
+
+// End mixins
+
+$backdrop-color: rgba(0, 0, 0, 0.3);
+$backdrop-padding: 5 * $unit;
+$modal-background-color: #fff;
+$max-modal-width: 60 * $unit;
+$modal-box-shadow-color: rgba(0, 0, 0, 0.25);
+
+.main-panel {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.modal-backdrop {
+  background-color: $backdrop-color;
+  bottom: 0;
+  left: 0;
+  padding: $backdrop-padding;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  .modal-panel {
+    background-color: $modal-background-color;
+    border-radius: $unit;
+    box-shadow: 5px 5px 25px $modal-box-shadow-color;
+    margin: 0 auto;
+    max-width: $max-modal-width;
+    padding: 2 * $unit;
+  }
+}
+
+.login-form {
+  @include form();
+}
+
+.heading {
+  width: 100%;
+
+  &__title {
+    @include breakpoint(phone) {
+      @include typ(large-title phone);
+    }
+    @include breakpoint(tablet) {
+      @include typ(large-title tablet);
+    }
+    @include breakpoint(desktop) {
+      @include typ(large-title desktop);
+    }
+    @include breakpoint(hd) {
+      @include typ(large-title hd);
+    }
+    @include breakpoint(full) {
+      @include typ(large-title full);
+    }
+  }
+}
+
+.collaborators {
+  width: 40%;
+
+  &__heading {
+    @include typ(title-2);
+  }
+
+  .collaborators-list {
+    @include list();
+  }
+}

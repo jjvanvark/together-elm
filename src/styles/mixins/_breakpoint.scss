@@ -1,0 +1,46 @@
+$br-phone-tablet: 600px !default;
+$br-tablet-desktop: 900px !default;
+$br-desktop-hd: 1200px !default;
+$br-hd-full: 1800px !default;
+
+$breakpoint-up: (
+  phone: 0,
+  tablet: $br-phone-tablet,
+  desktop: $br-tablet-desktop,
+  hd: $br-desktop-hd,
+  full: $br-hd-full,
+);
+
+$breakpoint-down: (
+  phone: $br-phone-tablet,
+  tablet: $br-tablet-desktop,
+  desktop: $br-desktop-hd,
+  hd: $br-hd-full,
+);
+
+@mixin breakpoint($var) {
+
+  $target: nth($var, 1);
+  $type: if(length($var) > 1, nth($var, 2), up);
+
+  @if $type == down and $target == full or $type == up and $target == down {
+    @media screen {
+      @content;
+    }
+  } @else if $type == up or ( $type == only and $target == full ) {
+    @media screen and (min-width: map-get($breakpoint-up, $target)) {
+      @content;
+    }
+  } @else if $type == down {
+    @media screen and (max-width: map-get($breakpoint-down, $target) - 1) {
+      @content;
+    }
+  } @else if $type == only {
+    @media screen and (min-width: map-get($breakpoint-up, $target)) and (max-width: map-get($breakpoint-down, $target) - 1) {
+      @content;
+    }
+  } @else {
+    @error 'No target:"#{$target}" with type:"#{$type}" pair found.';
+  }
+
+}

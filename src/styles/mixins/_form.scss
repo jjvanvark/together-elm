@@ -1,0 +1,72 @@
+@mixin form(
+  $border-size: rem(1px),
+  $border-color: rgba(0,0,0,.25),
+  $border-focus: c(pri 3),
+  $border-radius: rem(2px)
+) {
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: $unit;
+  }
+
+  legend {
+    @include typ('large-title');
+  }
+
+  .input-group {
+    display: flex;
+    margin-bottom: 2 * $unit;
+
+    & > * {
+      border: $border-size solid $border-color;
+      border-left: 0;
+
+      &:first-child {
+        border-bottom-left-radius: $border-radius;
+        border-left: $border-size solid $border-color;
+        border-top-left-radius: $border-radius;
+      }
+
+      &:last-child {
+        border-bottom-right-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+      }
+    }
+
+
+  }
+
+  label {
+    @include typ(subhead);
+
+    display: block;
+    width: 100%;
+  }
+
+  input,
+  .input-group input {
+    outline: none;
+
+    &:focus {
+      transition: .15s box-shadow ease;
+    }
+
+    &::placeholder {
+      font-weight: 300;
+    }
+
+    &:not([type=submit]):not([type=file]) {
+      box-sizing: border-box;
+      display: block;
+      flex-grow: 2;
+      font-size: rem(18px);
+      padding: $unit;
+    }
+  }
+
+  .add-on {
+    background-color: c(pri);
+    padding: $unit;
+  }
+}

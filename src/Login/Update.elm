@@ -4,11 +4,12 @@ import App.Msg as AppMsg
 import Login.Model exposing (Model)
 import Login.Msg exposing (Msg(..))
 import Login.Requests exposing (login)
-import User.Requests exposing (start)
 import Navigation.Msg as NavigationMsg
 import Shared.Focus exposing (focus)
 import Shared.Task exposing (task)
 import Shared.Ports exposing (setToken)
+import Websockets.Msg as WebsocketsMsg
+import Websockets.Types exposing (SenderLoad(..))
 import Regex exposing (regex, contains, Regex, caseInsensitive)
 
 
@@ -61,7 +62,7 @@ update message model =
                 | token = Just token
             }
                 ! [ setToken token
-                  , start <| Just token
+                  , task <| AppMsg.Websockets <| WebsocketsMsg.Send SendStart
                   , task <| AppMsg.Navigation NavigationMsg.CloseModal
                   ]
 

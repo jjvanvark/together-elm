@@ -1,0 +1,111 @@
+body {
+  font-family: system-ui;
+}
+
+$areas: phone tablet desktop hd full;
+
+$types: (
+  'large-title': (
+    phone: rem(32px) 400,
+    tablet: rem(33px) 400,
+    desktop: rem(34px) 400,
+    hd: rem(36px) 400,
+    full: rem(38px) 400,
+  ),
+  'title-1': (
+    phone: rem(26px) 400,
+    tablet: rem(27px) 400,
+    desktop: rem(28px) 400,
+    hd: rem(30px) 400,
+    full: rem(32px) 400,
+  ),
+  'title-2': (
+    phone: rem(20px) 400,
+    tablet: rem(21px) 400,
+    desktop: rem(22px) 400,
+    hd: rem(24px) 400,
+    full: rem(26px) 400,
+  ),
+  'title-3': (
+    phone: rem(18px) 400,
+    tablet: rem(19px) 400,
+    desktop: rem(20px) 400,
+    hd: rem(22px) 400,
+    full: rem(24px) 400,
+  ),
+  'headline': (
+    phone: rem(15px) 600,
+    tablet: rem(16px) 600,
+    desktop: rem(17px) 600,
+    hd: rem(19px) 600,
+    full: rem(21px) 600,
+  ),
+  'body': (
+    phone: rem(15px) 400,
+    tablet: rem(16px) 400,
+    desktop: rem(17px) 400,
+    hd: rem(19px) 400,
+    full: rem(21px) 400,
+  ),
+  'callout': (
+    phone: rem(14px) 400,
+    tablet: rem(15px) 400,
+    desktop: rem(16px) 400,
+    hd: rem(18px) 400,
+    full: rem(20px) 400,
+  ),
+  'subhead': (
+    phone: rem(13px) 400,
+    tablet: rem(14px) 400,
+    desktop: rem(15px) 400,
+    hd: rem(17px) 400,
+    full: rem(19px) 400,
+  ),
+  'footnote': (
+    phone: rem(12px) 400,
+    tablet: rem(12px) 400,
+    desktop: rem(13px) 400,
+    hd: rem(15px) 400,
+    full: rem(17px) 400,
+  ),
+  'caption-1': (
+    phone: rem(11px) 400,
+    tablet: rem(11px) 400,
+    desktop: rem(12px) 400,
+    hd: rem(14px) 400,
+    full: rem(16px) 400,
+  ),
+  'caption-2': (
+    phone: rem(11px) 400,
+    tablet: rem(11px) 400,
+    desktop: rem(11px) 400,
+    hd: rem(13px) 400,
+    full: rem(15px) 400,
+  ),
+);
+
+@mixin t($var) {
+
+  $type: map-get($types, $var);
+  @each $area in $areas {
+    @include breakpoint($area up) {
+      $result: map-get($type, $area);
+      font-size: nth($result, 1);
+      font-weight: if(length($result) > 1, nth($result, 2), 400);
+    }
+  }
+
+}
+
+@mixin typ($var) {
+
+  $name: nth($var, 1);
+  $area: if(length($var) > 1, nth($var, 2), nth($areas, 1));
+
+  $type: map-get($types, $name);
+  $result: map-get($type, $area);
+
+  font-size: nth($result, 1);
+  font-weight: if(length($result) > 1, nth($result, 2), 400);
+
+}

@@ -5,6 +5,8 @@ import App.Msg exposing (Msg(..))
 import Login.Update as Login
 import User.Update as User
 import Navigation.Update as Navigation
+import Websockets.Update as Websockets
+import Collaborators.Update as Collaborators
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -33,3 +35,18 @@ update message model =
                     Navigation.update msg model.navigation
             in
                 { model | navigation = updatedModel } ! [ appMsg ]
+
+        Websockets msg ->
+            let
+                ( updatedModel, appMsg ) =
+                    Websockets.update msg model.websockets <|
+                        Maybe.withDefault "" model.login.token
+            in
+                { model | websockets = updatedModel } ! [ appMsg ]
+
+        Collaborators msg ->
+            let
+                ( updatedModel, appMsg ) =
+                    Collaborators.update msg model.collaborators
+            in
+                { model | collaborators = updatedModel } ! [ appMsg ]

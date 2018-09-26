@@ -13,6 +13,12 @@ import Http exposing (Error(..))
 update : Msg -> Model -> ( Model, Cmd AppMsg.Msg )
 update message model =
     case message of
+        SetUser user ->
+            { model | user = Just user } ! []
+
+        SetCollaborators collaborators ->
+            { model | collaborators = Just collaborators } ! []
+
         ReceiveStart (Err error) ->
             case checkStatus 401 error of
                 True ->
@@ -22,11 +28,7 @@ update message model =
                     model ! []
 
         ReceiveStart (Ok value) ->
-            { model
-                | user = Just value.user
-                , collaborators = Just value.collaborators
-            }
-                ! []
+            model ! []
 
 
 checkStatus : Int -> Error -> Bool
